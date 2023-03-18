@@ -25,6 +25,8 @@ import EditVacansieContainer from './components/VacansiesList/ContainerComponent
 import ActiveVacansieContainer from './components/VacansiesList/ContainerComponents/ActiveVacansieContainer';
 import HeaderContainer from './components/HeaderContainer';
 import SidebarContainer from './components/SidebarContainer';
+import Activate from './pages/Activate';
+import New_register from './pages/New_register';
 
 const App = () => {
   return (
@@ -35,9 +37,10 @@ const App = () => {
           <div className='app_container'>
             <SidebarContainer />
             <div>
-              <AuthPage />
               <Routes>
-              <Route path='/auth' exact element={<AuthPage />} />
+                <Route path='' exact element={<AuthPage />} />
+                <Route path='/activate/:uid/:token' element={<Activate />} />
+                <Route path='/reset_password/:uid/:token' element={<New_register />} />
                 <Route element={<PrivateRoute />} >
                   <Route path="/vacansies" element={<Vacansies />} />
                   <Route path="/vacansies/all" element={<VacansiesListAllContainer />} />
@@ -52,9 +55,9 @@ const App = () => {
                   <Route path="/resumes/create_resume" element={<AddResumeContainer />} />
                   <Route path="/profile" element={<ProfileContainer />} />
                   <Route path="/profile/edit" element={<EditProfileContainer />} />
-                  
+
                 </Route>
-                
+
               </Routes>
             </div>
           </div>

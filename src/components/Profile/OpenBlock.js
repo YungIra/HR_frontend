@@ -16,7 +16,7 @@ const OpenBlock = () => {
             <div className="linkblock">
                 <NavLink to="/profile" className="fullname">Профиль</NavLink>
                 {user.is_admin && <a href="http://127.0.0.1:8000/admin/" target="_blank">Админка</a>}
-                <NavLink className='' onClick={logoutUser} to="/auth/login">Выйти</NavLink>
+                <NavLink className='' onClick={logoutUser} to="">Выйти</NavLink>
             </div>
             
         </div>

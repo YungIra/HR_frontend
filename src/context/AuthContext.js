@@ -44,7 +44,9 @@ export const AuthProvider = ({ children }) => {
             setUser(dataUser.user)
             localStorage.setItem('authTokens', JSON.stringify(data))
             localStorage.setItem('user', JSON.stringify(dataUser.user))
-            nav('/vacansies')
+            console.log(dataUser)
+            if (dataUser.user.full_name === null) nav('/profile')
+            else nav('/vacansies')
         } else {
             alert('Ошибочка')
         }
@@ -52,39 +54,26 @@ export const AuthProvider = ({ children }) => {
 
     let registerUser = async (e) => {
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/api/register/', {
+        if (e.target.password.value !== e.target.password2.value) {
+            alert('Пароли не совпадают')
+            return
+        }
+        let response = await fetch('http://127.0.0.1:8000/auth/users/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 'email': e.target.email.value, 'password': e.target.password.value, 'password2': e.target.password2.value })
+            body: JSON.stringify({
+                'email': e.target.email.value,
+                'password': e.target.password.value
+            })
         })
-        if (response.status === 200) {
-            let response = await fetch('http://127.0.0.1:8000/auth/jwt/create/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 'email': e.target.email.value, 'password': e.target.password.value })
-            })
-            let data = await response.json()
-            let getUser = await fetch('http://127.0.0.1:8000/api/profile/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${data.access}`
-                }
-            })
-            let dataUser = await getUser.json()
-            if (response.status === 200) {
-                setAuthToken(data)
-                setUser(dataUser.user)
-                localStorage.setItem('authTokens', JSON.stringify(data))
-                localStorage.setItem('user', JSON.stringify(dataUser.user))
-                nav('/profile')
-            } else {
-                alert('Ошибочка')
-            }
+        if (response.status === 201) {
+            alert('На вашу почту отправлено письмо. Проверьте её и подтвердите ваш email.')
+        } else {
+            alert('Ошибочка')
         }
+
     }
 
     let logoutUser = () => {
@@ -92,7 +81,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null)
         localStorage.removeItem('authTokens')
         localStorage.removeItem('user')
-        nav('/auth/login')
+        nav('')
     }
 
     let updateUser = (newUser) => {

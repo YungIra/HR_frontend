@@ -9,19 +9,19 @@
     font-family: 'Inter', sans-serif;
     padding-bottom: 10%;
     overflow-x: hidden;
-    
+
 }
 
 textarea {
     font-family: 'Inter', sans-serif;
     line-height: 22px;
     display: block;
-    padding: 5px ;
+    padding: 5px;
 }
 
 .app_container {
     display: flex;
-    
+
 }
 
 .main_container {
@@ -38,9 +38,20 @@ textarea {
 p {
     line-height: 28px;
 }
+
 a {
     text-decoration: none;
     color: #000
+}
+
+.resetpasswordlink {
+    font-size: small;
+    color: gray;
+}
+
+.resetpasswordlink:hover {
+    color: #000;
+    cursor: pointer;
 }
 
 /* a:hover {
@@ -59,4 +70,5 @@ a {
 @import url(./requests.css);
 @import url(./sorts.css);
 @import url(./buttons.css);
+@import url(./modal.css);
 @import url(./active.css)

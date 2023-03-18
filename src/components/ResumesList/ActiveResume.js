@@ -21,10 +21,14 @@ const ActiveResume = (props) => {
             params: {
                 status: 'my'
             },
-            data: data
+            data: {
+                id:location.state.id,
+                status: 'N_P'
+            }
         })
             .then(response => {
                 console.log(response.data)
+                if (response.status===200) nav('/resumes')
             })
     }
     let publish = () => {
@@ -39,14 +43,14 @@ const ActiveResume = (props) => {
             params: {
                 status: 'my'
             },
-            data: data
+            data: {
+                id:location.state.id,
+                status: 'Y_P'
+            }
         })
             .then(response => {
                 console.log(response.data)
-                if (response.status === 200) {
-                    
-                    nav('/resumes')
-                }
+                if (response.status===200) nav('/resumes')
             })
     }
 
@@ -63,12 +67,14 @@ const ActiveResume = (props) => {
             },
             data: data
         })
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response.data)
-                alert('Ваша заявка отправлена')
-            }
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    if (response.data.err === undefined) {
+                        alert('Ваша заявка отправлена!')
+                    }
+                    else alert('Вы уже отправили заявку на это резюме')
+                }
+            })
     }
 
     return (
@@ -101,7 +107,7 @@ const ActiveResume = (props) => {
                         <p className="active_block_item">Желаемая зарплата: {location.state.salary} руб</p>
                         <p className="active_block_item">Опыт работы: {location.state.exp_work}</p>
                         <p>{location.state.about_me}</p>
-                        
+
                     </div>
                     <div className="active_files">
                         <img className='photo' src={location.state.image} />
@@ -109,12 +115,11 @@ const ActiveResume = (props) => {
                     </div>
                 </div>
             </div>
-            {location.state.user.id !== user.id && 
-            <div className="send_request_resume">
-                <button onClick={sendRequest} className="btn_resume orange ">Отправить заявку</button>
-                <p className="send_alert_resume">На почту сотрудника будет отправлено письмо <br></br>о том, что вы заинтересовались его резюме.</p>
-            </div>
-            
+            {location.state.user.id !== user.id &&
+                <div className="send_request_resume">
+                    <button onClick={sendRequest} className="btn_resume orange " title="На почту сотрудника будет отправлено письмо о том, что вы заинтересовались его резюме.">Отправить заявку</button>
+                </div>
+
             }
             {(location.state.user.id === user.id && location.state.status !== 'Y_P') && <button className="btn_resume orange " onClick={publish}>Опубликовать</button>}
             {(location.state.user.id === user.id && location.state.status === 'Y_P') && <button className="btn_resume orange " onClick={notPublish}>Снять с публикации</button>}

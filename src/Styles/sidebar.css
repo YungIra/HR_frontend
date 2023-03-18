@@ -32,12 +32,13 @@
 
 .sidebar {
     position: fixed;
-    background: linear-gradient(180deg, rgba(254, 222, 201, 0.56) 0%, rgba(254, 222, 201, 0) 107.03%);
+    background: linear-gradient(227deg, rgb(247 188 150 / 56%) 50%, rgba(255, 218, 193, 0) 107.03%);
+    /* background: linear-gradient(180deg, rgba(254, 222, 201, 0.56) 0%, rgba(254, 222, 201, 0) 107.03%);; */
     border: 0.5155px solid rgba(245, 239, 235, 0.4);
     box-shadow: 0px 0px 65.984px -32.992px rgba(202, 112, 32, 0.56);
     backdrop-filter: blur(82.48px);
     top: 0px;
-    height: 100vh;
+    height: 100%;
     z-index: 500;
 }
 

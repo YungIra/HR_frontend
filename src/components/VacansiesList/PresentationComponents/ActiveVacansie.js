@@ -66,12 +66,14 @@ const ActiveVacansie = (props) => {
             },
             data: data
         })
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response.data)
-                alert('Ваша заявка отправлена')
-            }
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    if (response.data.err === undefined) {
+                        alert('Ваша заявка отправлена!')
+                    }
+                    else alert('Вы уже отправили заявку на эту вакансию')
+                }
+            })
     }
 
     return (
@@ -103,11 +105,11 @@ const ActiveVacansie = (props) => {
                 <p className="active_block_item">Стаж работы: {location.state.exp_work}</p>
                 <p className="active_block_item">{location.state.description}</p>
             </div>
-            {(location.state.user.id !== user.id) && 
-            <div className="send_request_vacansie">
-                <button onClick={sendRequest} className="btn_vacansie orange">Отправить заявку</button>
-                <p className="send_alert_vacansie">На почту сотрудника будет отправлено письмо<br></br> о том, что вы заинтересовались его вакансией.</p>
-            </div>
+            {(location.state.user.id !== user.id) &&
+                <div className="send_request_vacansie">
+                    <button onClick={sendRequest} className="btn_vacansie orange" title="На почту сотрудника будет отправлено письмо о том, что вы заинтересовались его вакансией.">Отправить заявку</button>
+                    {/* <p className="send_alert_vacansie">На почту сотрудника будет отправлено письмо<br></br> о том, что вы заинтересовались его вакансией.</p> */}
+                </div>
             }
             {(location.state.user.id === user.id && location.state.status !== 'Y_P') && <button className="btn_vacansie orange" onClick={publish}>Опубликовать вакансию</button>}
             {(location.state.user.id === user.id && location.state.status === 'Y_P') && <button className="btn_vacansie orange" onClick={notPublish}>Снять с публикации</button>}
